@@ -14,7 +14,10 @@
           <h1>収入・支出・Uber収入・資産・確定申告を一元管理</h1>
           <p class="hero-copy">個人の毎月のキャッシュフローから副業収入、経費、資産推移までを確認できるWebアプリの初期版です。</p>
         </div>
-        <button class="primary-action">＋ 取引を追加</button>
+        <div class="hero-actions">
+          <button class="primary-action" type="button">＋ 取引を追加</button>
+          <button class="secondary-action" id="reset-storage" type="button">初期データに戻す</button>
+        </div>
       </section>
 
       <section class="stats-grid" id="stats" aria-label="主要指標"></section>
@@ -22,22 +25,47 @@
       <section class="dashboard-grid">
         <section class="panel wide">
           <div class="panel-heading"><div class="panel-icon">💼</div><h2>資産推移グラフ</h2></div>
+          <p class="section-copy" id="asset-auto-note"></p>
           <div id="asset-chart" class="chart"></div>
         </section>
 
         <section class="panel">
           <div class="panel-heading"><div class="panel-icon">🚲</div><h2>Uber収入管理</h2></div>
+          <form class="entry-form" id="uber-form">
+            <label>週<input name="week" placeholder="6/15週" required /></label>
+            <label>配達数<input name="deliveries" type="number" min="0" required /></label>
+            <label>売上<input name="gross" type="number" min="0" required /></label>
+            <label>チップ<input name="tips" type="number" min="0" value="0" required /></label>
+            <label>手数料<input name="fees" type="number" min="0" value="0" required /></label>
+            <button type="submit">Uber収入を追加</button>
+          </form>
           <div id="uber-chart" class="chart small"></div>
+          <div id="uber-table" class="table-wrap compact"></div>
           <div class="uber-summary"><span>平均配達単価</span><strong id="average-delivery"></strong></div>
         </section>
 
         <section class="panel">
           <div class="panel-heading"><div class="panel-icon">↗</div><h2>収入管理</h2></div>
+          <form class="entry-form" id="income-form">
+            <label>日付<input name="date" type="date" required /></label>
+            <label>内容<input name="source" placeholder="例: 給与" required /></label>
+            <label>カテゴリ<input name="category" placeholder="例: 本業" required /></label>
+            <label>金額<input name="amount" type="number" min="0" required /></label>
+            <button type="submit">収入を追加</button>
+          </form>
           <div id="income-table" class="table-wrap"></div>
         </section>
 
         <section class="panel">
           <div class="panel-heading"><div class="panel-icon">↘</div><h2>支出管理</h2></div>
+          <form class="entry-form" id="expense-form">
+            <label>日付<input name="date" type="date" required /></label>
+            <label>内容<input name="name" placeholder="例: 交通費" required /></label>
+            <label>カテゴリ<input name="category" placeholder="例: 車両費" required /></label>
+            <label>金額<input name="amount" type="number" min="0" required /></label>
+            <label class="checkbox-label"><input name="deductible" type="checkbox" />経費対象</label>
+            <button type="submit">支出を追加</button>
+          </form>
           <div id="expense-table" class="table-wrap"></div>
         </section>
 
