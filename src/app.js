@@ -1,5 +1,6 @@
 const yen = new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY', maximumFractionDigits: 0 });
 const STORAGE_KEY = 'finance-dashboard-cashflow-v2';
+const LEGACY_STORAGE_KEY = 'finance-dashboard-data-v1';
 
 const initialData = {
   monthlyRecords: [
@@ -62,7 +63,7 @@ function migrateLegacyData(savedData) {
 }
 
 function loadData() {
-  const saved = localStorage.getItem(STORAGE_KEY);
+  const saved = localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY);
   if (!saved) return cloneInitialData();
 
   return migrateLegacyData(JSON.parse(saved));
@@ -255,6 +256,7 @@ document.querySelector('[data-scroll-target]').addEventListener('click', (event)
 document.querySelector('#reset-storage').addEventListener('click', () => {
   ({ monthlyRecords, fixedCosts } = cloneInitialData());
   localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(LEGACY_STORAGE_KEY);
   render();
 });
 
