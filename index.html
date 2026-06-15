@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finance Dashboard</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Personal Finance Dashboard</p>
+          <h1>収入・支出・Uber収入・資産・確定申告を一元管理</h1>
+          <p class="hero-copy">個人の毎月のキャッシュフローから副業収入、経費、資産推移までを確認できるWebアプリの初期版です。</p>
+        </div>
+        <button class="primary-action">＋ 取引を追加</button>
+      </section>
+
+      <section class="stats-grid" id="stats" aria-label="主要指標"></section>
+
+      <section class="dashboard-grid">
+        <section class="panel wide">
+          <div class="panel-heading"><div class="panel-icon">💼</div><h2>資産推移グラフ</h2></div>
+          <div id="asset-chart" class="chart"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading"><div class="panel-icon">🚲</div><h2>Uber収入管理</h2></div>
+          <div id="uber-chart" class="chart small"></div>
+          <div class="uber-summary"><span>平均配達単価</span><strong id="average-delivery"></strong></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading"><div class="panel-icon">↗</div><h2>収入管理</h2></div>
+          <div id="income-table" class="table-wrap"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading"><div class="panel-icon">↘</div><h2>支出管理</h2></div>
+          <div id="expense-table" class="table-wrap"></div>
+        </section>
+
+        <section class="panel wide">
+          <div class="panel-heading"><div class="panel-icon">🧾</div><h2>確定申告用経費管理</h2></div>
+          <div class="tax-layout">
+            <div>
+              <p class="section-copy">経費対象の支出を自動集計し、カテゴリ別に確認できます。</p>
+              <div id="tax-table" class="table-wrap"></div>
+            </div>
+            <div class="tax-card"><span>今年の経費見込み</span><strong id="annual-deduction"></strong><p>現在の月次経費をもとにした年間換算です。</p></div>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="/src/app.js"></script>
+  </body>
+</html>
