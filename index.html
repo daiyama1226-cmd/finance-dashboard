@@ -3,56 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Finance Dashboard</title>
-    <link rel="stylesheet" href="/src/styles.css" />
+    <title>Personal Assets & Cash Flow Dashboard</title>
+    <link rel="stylesheet" href="./src/styles.css" />
   </head>
   <body>
     <main class="app-shell">
       <section class="hero">
         <div>
-          <p class="eyebrow">Personal Finance Dashboard</p>
-          <h1>収入・支出・Uber収入・資産・確定申告を一元管理</h1>
-          <p class="hero-copy">個人の毎月のキャッシュフローから副業収入、経費、資産推移までを確認できるWebアプリの初期版です。</p>
+          <p class="eyebrow">Personal Assets & Cash Flow</p>
+          <h1>個人の資産・キャッシュフロー管理</h1>
+          <p class="hero-copy">月別の cash in / cash out、資産・負債・純資産、固定費、支出分類、将来予測をまとめて確認できます。</p>
         </div>
-        <button class="primary-action">＋ 取引を追加</button>
+        <div class="hero-actions">
+          <button class="primary-action" type="button" data-scroll-target="#cashflow-form">＋ 月次データを追加</button>
+          <button class="secondary-action" id="reset-storage" type="button">初期データに戻す</button>
+        </div>
       </section>
 
-      <section class="stats-grid" id="stats" aria-label="主要指標"></section>
+      <section class="stats-grid" id="monthly-summary" aria-label="月別サマリーカード"></section>
 
       <section class="dashboard-grid">
         <section class="panel wide">
-          <div class="panel-heading"><div class="panel-icon">💼</div><h2>資産推移グラフ</h2></div>
+          <div class="panel-heading"><div class="panel-icon">📈</div><h2>資産推移グラフ</h2></div>
+          <p class="section-copy">assets / liabilities / net worth を月別に追跡します。</p>
           <div id="asset-chart" class="chart"></div>
         </section>
 
-        <section class="panel">
-          <div class="panel-heading"><div class="panel-icon">🚲</div><h2>Uber収入管理</h2></div>
-          <div id="uber-chart" class="chart small"></div>
-          <div class="uber-summary"><span>平均配達単価</span><strong id="average-delivery"></strong></div>
+        <section class="panel wide">
+          <div class="panel-heading"><div class="panel-icon">💰</div><h2>キャッシュフロー表</h2></div>
+          <form class="entry-form" id="cashflow-form">
+            <label>月<input name="month" type="month" required /></label>
+            <label>cash in（収入）<input name="cashIn" type="number" min="0" required /></label>
+            <label>Uber収入<input name="uberIncome" type="number" min="0" value="0" required /></label>
+            <label>消費<input name="consumption" type="number" min="0" required /></label>
+            <label>浪費<input name="waste" type="number" min="0" required /></label>
+            <label>投資<input name="investment" type="number" min="0" required /></label>
+            <label>assets（資産）<input name="assets" type="number" min="0" required /></label>
+            <label>liabilities（負債）<input name="liabilities" type="number" min="0" required /></label>
+            <label>cash in forecast<input name="cashInForecast" type="number" min="0" required /></label>
+            <label>cash out forecast<input name="cashOutForecast" type="number" min="0" required /></label>
+            <button type="submit">月次データを保存</button>
+          </form>
+          <div id="cashflow-table" class="table-wrap"></div>
         </section>
 
         <section class="panel">
-          <div class="panel-heading"><div class="panel-icon">↗</div><h2>収入管理</h2></div>
-          <div id="income-table" class="table-wrap"></div>
+          <div class="panel-heading"><div class="panel-icon">🏠</div><h2>固定費一覧</h2></div>
+          <form class="entry-form single" id="fixed-cost-form">
+            <label>項目<input name="name" list="fixed-cost-options" placeholder="例: 家賃" required /></label>
+            <datalist id="fixed-cost-options">
+              <option value="家賃"></option>
+              <option value="奨学金"></option>
+              <option value="サブスク"></option>
+              <option value="Wi-Fi"></option>
+              <option value="電気"></option>
+              <option value="ガス"></option>
+              <option value="水道"></option>
+              <option value="生命保険"></option>
+              <option value="食費"></option>
+              <option value="その他固定費"></option>
+            </datalist>
+            <label>カテゴリ<input name="category" placeholder="例: 住居" required /></label>
+            <label>月額<input name="amount" type="number" min="0" required /></label>
+            <button type="submit">固定費を追加</button>
+          </form>
+          <div id="fixed-cost-table" class="table-wrap compact"></div>
         </section>
 
         <section class="panel">
-          <div class="panel-heading"><div class="panel-icon">↘</div><h2>支出管理</h2></div>
-          <div id="expense-table" class="table-wrap"></div>
+          <div class="panel-heading"><div class="panel-icon">🍩</div><h2>支出分類（消費・浪費・投資）</h2></div>
+          <p class="section-copy">消費＝生活に必要、浪費＝満足度はあるが資産形成につながりにくい、投資＝将来価値につながる支出。</p>
+          <div id="spending-pie" class="pie-wrap"></div>
         </section>
 
         <section class="panel wide">
-          <div class="panel-heading"><div class="panel-icon">🧾</div><h2>確定申告用経費管理</h2></div>
-          <div class="tax-layout">
-            <div>
-              <p class="section-copy">経費対象の支出を自動集計し、カテゴリ別に確認できます。</p>
-              <div id="tax-table" class="table-wrap"></div>
-            </div>
-            <div class="tax-card"><span>今年の経費見込み</span><strong id="annual-deduction"></strong><p>現在の月次経費をもとにした年間換算です。</p></div>
-          </div>
+          <div class="panel-heading"><div class="panel-icon">🔮</div><h2>月別の収支予測</h2></div>
+          <div id="forecast-table" class="table-wrap"></div>
+        </section>
+
+        <section class="panel wide">
+          <div class="panel-heading"><div class="panel-icon">🏦</div><h2>純資産推移と予測</h2></div>
+          <div id="net-worth-chart" class="chart"></div>
         </section>
       </section>
     </main>
-    <script src="/src/app.js"></script>
+    <script src="./src/app.js"></script>
   </body>
 </html>
