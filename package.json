@@ -1,0 +1,10 @@
+{
+  "name": "finance-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "個人向け財務管理Webアプリ",
+  "scripts": {
+    "start": "python3 -m http.server 4173",
+    "build": "node scripts/build-check.js"
+  }
+}
