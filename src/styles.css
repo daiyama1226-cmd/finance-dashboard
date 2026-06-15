@@ -87,3 +87,72 @@ td { border-top: 1px solid #e2e8f0; padding: 14px 8px; }
 .chart text { fill: #64748b; font-size: 0.78rem; }
 .grid-line { fill: none; stroke: #e2e8f0; stroke-width: 2; }
 .chart-line { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 5; }
+
+.entry-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 18px;
+  padding: 16px;
+  border-radius: 20px;
+  background: #f8fafc;
+}
+
+.entry-form label {
+  display: grid;
+  gap: 6px;
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.entry-form input {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: #102033;
+  background: white;
+  font: inherit;
+}
+
+.entry-form button {
+  align-self: end;
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 14px;
+  color: white;
+  background: #2563eb;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-label input { width: auto; }
+#asset-auto-note { margin-top: -4px; }
+
+@media (max-width: 620px) {
+  .entry-form { grid-template-columns: 1fr; }
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.secondary-action {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  padding: 12px 18px;
+  color: white;
+  background: rgba(255, 255, 255, 0.14);
+  font-weight: 800;
+  cursor: pointer;
+}
